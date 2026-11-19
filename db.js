@@ -12,7 +12,7 @@ const registro = [
     { persona: "Doña Clemencia", categoria: "Enlatados", dia: 6, valor: 17950, cantidad: 2 },
     { persona: "Don Rogelio", categoria: "Aseo", dia: 3, valor: 45221, cantidad: 1 },
     { persona: "Valentina", categoria: "Lácteos", dia: 1, valor: 6300, cantidad: 4 },
-    { persona: "Juanjose", categoria: "Granos", dia: 6, valor: 42800, cantidad: 3 },
+    { persona: "Valentina", categoria: "Granos", dia: 6, valor: 42800, cantidad: 3 },
     { persona: "Miguel", categoria: "Granos", dia: 4, valor: 23600, cantidad: 6},
     { persona: "Don Aurelio", categoria: "Legumbres", dia: 1, valor: 12000, cantidad:  2},
     { persona: "Doña Teresa", categoria: "Lácteos", dia: 7, valor: 1700, cantidad: 2 },

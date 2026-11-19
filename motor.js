@@ -2,12 +2,16 @@
 
 const registro = require ("./db.js")
 
+
+// Creamos un array global para el almacenamiento de los valores(precios) ya que lo estaremos usando mucho.
 let totalValores= []
 
 for (let i=0; i < registro.length;i++)  {
     totalValores.push(registro[i].valor)
     }
 
+
+//Mostramos el registro solicitado y usamos un caso borde
 function mostrarRegistro(registro) {
     if(!registro){
     return "Este registro no esta en la lista"
@@ -16,11 +20,14 @@ function mostrarRegistro(registro) {
     return `Persona: ${registro.persona} categoria: ${registro.categoria}  Dia: ${registro.dia} valor: ${registro.valor}  Cantidad: ${registro.cantidad}`
 }
 
+//Mostramos todos los registros que tenemos.
+
 function listarTodo(datos) {
     for(let i=0;i<datos.length;i++){
         console.log (mostrarRegistro(datos[i]))
     }
-    }
+    
+}
 
 
 //console.log(listarTodo(registro)) 
@@ -97,6 +104,34 @@ function totalesPorCategoria (registro, categoria){
         
 }   
 
+
+
+function personasUnicas(data){
+    let nombres = new Set()
+    for(let i = 0; i < data.length;i++){
+        nombres.add(data[i].persona)
+    }
+   
+    
+    return `Tenemos ${nombres.size} personas diferentes.`
+
+}
+
+function recurrentesLento(data){
+    let recurrentes = new Set()
+    let newSet = new Set()
+    for (let value of data){
+        if(newSet.has(value.persona)){
+            recurrentes.add(value.persona)
+        } else newSet.add(value.persona)
+    }
+    
+    return [...recurrentes]
+
+}
+
+
+    
 // ZONA DE PRUEBAS
 
-console.log(totalesPorCategoria(registro, "Lácteos"))
+console.log(recurrentesLento(registro))
