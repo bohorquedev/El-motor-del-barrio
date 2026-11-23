@@ -117,7 +117,7 @@ function personasUnicas(data){
 
 }
 
-function recurrentesLento(data){
+function recurrentesRapido(data){
     let recurrentes = new Set()
     let newSet = new Set()
     for (let value of data){
@@ -130,8 +130,63 @@ function recurrentesLento(data){
 
 }
 
+function recurrentesLento(datos) {
+    let recurrentes = [];
+    for (let i = 0; i < datos.length; i++) {
+        let contador = 0;
+        for (let j = 0; j < datos.length; j++) {
+            if (datos[i].persona === datos[j].persona) {
+                contador++;
+            }
+        }
+        if (contador > 1 && !recurrentes.includes(datos[i].persona)) {
+            recurrentes.push(datos[i].persona);
+        }
+    }
 
-    
+    return recurrentes;
+}
+
+function categoriaEstrella(datos) {
+    let categorias = new Map();
+
+    for (let registro of datos) {
+        let categoria = registro.categoria;
+
+        if (categorias.has(categoria)) {
+            categorias.set(categoria, categorias.get(categoria) + 1);
+        } else {
+            categorias.set(categoria, 1);
+        }
+    }
+    let max = 0;
+    let ganadora = null;
+
+    for (let [categoria, cantidad] of categorias) {
+        if (cantidad > max) {
+            max = cantidad;
+            ganadora = categoria;
+        }
+    }
+
+    return ganadora;
+}
+
+function parQueSuma(datos, objetivo) {
+    let registros = new Map();
+
+    for (let registro of datos) {
+        let complemento = objetivo - registro.valor;
+
+        if (registros.has(complemento)) {
+            return [registros.get(complemento), registro];
+        }
+
+        registros.set(registro.valor, registro);
+    }
+
+    return null;
+}
 // ZONA DE PRUEBAS
 
-console.log(recurrentesLento(registro))
+console.log(parQueSuma(registro, 35600))
