@@ -131,22 +131,30 @@ function recurrentesRapido(data){
 }
 
 // Devuelve los recurrentes con una eficiencia cuadratica
-function recurrentesLento(datos) {
+function recurrentesLento(datos, contador = { pasos: 0 }) {
     let recurrentes = [];
+
     for (let i = 0; i < datos.length; i++) {
-        let contador = 0;
+        let apariciones = 0;
+
         for (let j = 0; j < datos.length; j++) {
+            contador.pasos++;
+
             if (datos[i].persona === datos[j].persona) {
-                contador++;
+                apariciones++;
             }
         }
-        if (contador > 1 && !recurrentes.includes(datos[i].persona)) {
+
+        if (apariciones > 1 && !recurrentes.includes(datos[i].persona)) {
             recurrentes.push(datos[i].persona);
         }
     }
 
+    console.log("Total de comparaciones:", contador.pasos);
+
     return recurrentes;
 }
+
 
 // Devuelve la categoria mas recurrente
 
@@ -303,7 +311,9 @@ console.log("7. Personas recurrentes - versión rápida:");
 console.log(recurrentesRapido(registro));
 
 console.log("8. Personas recurrentes - versión lenta:");
-console.log(recurrentesLento(registro));
+const pasosLentos = {pasos : 0}
+console.log(recurrentesLento(registro,pasosLentos));
+
 
 console.log("9. Categoría estrella:");
 console.log(categoriaEstrella(registro));
