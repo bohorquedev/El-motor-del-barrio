@@ -30,8 +30,6 @@ function listarTodo(datos) {
 }
 
 
-//console.log(listarTodo(registro)) 
-
 
 // DIA 2 - REPORTES
 
@@ -70,7 +68,7 @@ function registroMayor(totalValores) {
         return mayorList
     }
 
-//console.log(registroMayor(totalValores))
+
 
 // filtrarPorCategoria(datos, categoria) -Devuelve un arreglo con los registros de esa categoría
 
@@ -105,6 +103,7 @@ function totalesPorCategoria (registro, categoria){
 }   
 
 
+// Devuelve el numero de personas que tenemos
 
 function personasUnicas(data){
     let nombres = new Set()
@@ -117,6 +116,7 @@ function personasUnicas(data){
 
 }
 
+//Devuelme el los registros recurrentes
 function recurrentesRapido(data){
     let recurrentes = new Set()
     let newSet = new Set()
@@ -130,6 +130,7 @@ function recurrentesRapido(data){
 
 }
 
+// Devuelve los recurrentes con una eficiencia cuadratica
 function recurrentesLento(datos) {
     let recurrentes = [];
     for (let i = 0; i < datos.length; i++) {
@@ -146,6 +147,8 @@ function recurrentesLento(datos) {
 
     return recurrentes;
 }
+
+// Devuelve la categoria mas recurrente
 
 function categoriaEstrella(datos) {
     let categorias = new Map();
@@ -172,6 +175,7 @@ function categoriaEstrella(datos) {
     return ganadora;
 }
 
+// Devuelve la si existen dos valores que sumen el objetivo
 function parQueSuma(datos, objetivo) {
     let registros = new Map();
 
@@ -187,6 +191,210 @@ function parQueSuma(datos, objetivo) {
 
     return null;
 }
-// ZONA DE PRUEBAS
 
+
+//Atendemos los clientes en cola
+class Cola {
+    constructor() {
+        this.fila = [];
+    }
+
+    llegar(persona) {
+        this.fila.push(persona);
+    }
+
+    atender() {
+        if (this.fila.length === 0) {
+            return "No hay clientes en espera";
+        }
+
+        return this.fila.shift();
+    }
+}
+
+
+
+
+// registro.forEach(compra => {
+//     cola.llegar(compra);
+// });
+
+// Aqui podemos agregar nuevos registros
+function agregarRegistro(datos, registro) {
+    datos.push(registro);
+    return datos;
+}
+
+//Aqui podemos eliminar los registros
+function deshacer(datos) {
+    if (datos.length === 0) {
+        return "No hay registros para deshacer";
+    }
+
+    return datos.pop();
+}
+
+
+
+
+// ==========================================
+// ZONA DE PRUEBAS - TIENDA DE BARRIO
+// ==========================================
+
+let valoresPrueba = registro.map(compra => compra.valor);
+
+
+// ==========================================
+// NIVEL 1 - OPERACIONES BÁSICAS
+// ==========================================
+
+console.group("NIVEL 1 - OPERACIONES BÁSICAS");
+
+console.log("1. Mostrar un registro:");
+console.log(mostrarRegistro(registro[0]));
+
+console.log("2. Mostrar registro inexistente:");
+console.log(mostrarRegistro(null));
+
+console.log("3. Listar todos los registros:");
+listarTodo(registro);
+
+console.log("4. Total de registros:", registro.length);
+
+console.groupEnd();
+
+
+// ==========================================
+// NIVEL 2 - REPORTES Y ANÁLISIS
+// ==========================================
+
+console.group("NIVEL 2 - REPORTES Y ANÁLISIS");
+
+console.log("1. Total general de ventas:");
+console.log(totalGeneral(registro, valoresPrueba));
+
+console.log("2. Promedio de ventas:");
+console.log(promedio(valoresPrueba));
+
+console.log("3. Registro con mayor valor:");
+console.log(registroMayor(valoresPrueba));
+
+console.log("4. Filtrar por categoría - Aseo:");
+filtrarPorCategoria(registro, "Aseo");
+
+console.log("5. Total de ventas por categoría:");
+
+let categoriasPrueba = [
+    "Aseo",
+    "Granos",
+    "Lácteos",
+    "Legumbres",
+    "Enlatados"
+];
+
+for (let categoria of categoriasPrueba) {
+    console.log(totalesPorCategoria(registro, categoria));
+}
+
+console.log("6. Cantidad de personas únicas:");
+console.log(personasUnicas(registro));
+
+console.log("7. Personas recurrentes - versión rápida:");
+console.log(recurrentesRapido(registro));
+
+console.log("8. Personas recurrentes - versión lenta:");
+console.log(recurrentesLento(registro));
+
+console.log("9. Categoría estrella:");
+console.log(categoriaEstrella(registro));
+
+console.log("10. Par de compras que suma $50.000:");
+console.log(parQueSuma(registro, 50000));
+
+console.groupEnd();
+
+
+// ==========================================
+// NIVEL 3 - ESTRUCTURAS DE DATOS
+// ==========================================
+
+console.group("NIVEL 3 - ESTRUCTURAS DE DATOS");
+
+
+
+console.group("1. COLA - QUEUE");
+
+const colaPrueba = new Cola();
+
+colaPrueba.llegar(registro[0]);
+colaPrueba.llegar(registro[1]);
+colaPrueba.llegar(registro[2]);
+
+console.log("Fila inicial:");
+console.log(colaPrueba.fila);
+
+console.log("Cliente atendido:");
+console.log(colaPrueba.atender());
+
+console.log("Fila después de atender:");
+console.log(colaPrueba.fila);
+
+console.log("Siguiente cliente:");
+console.log(colaPrueba.fila[0]);
+
+console.groupEnd();
+
+
+console.group("2. PILA - STACK");
+
+let datosPrueba = [...registro];
+
+console.log("Cantidad inicial de registros:");
+console.log(datosPrueba.length);
+
+const nuevaCompra = {
+    persona: "Carlos",
+    categoria: "Granos",
+    dia: 7,
+    valor: 25000,
+    cantidad: 3
+};
+
+console.log("Agregar nuevo registro:");
+agregarRegistro(datosPrueba, nuevaCompra);
+
+console.log("Cantidad después de agregar:");
+console.log(datosPrueba.length);
+
+console.log("Deshacer última operación:");
+console.log(deshacer(datosPrueba));
+
+console.log("Cantidad después de deshacer:");
+console.log(datosPrueba.length);
+
+console.groupEnd();
+
+console.groupEnd();
+
+
+// ==========================================
+// NIVEL 5 - CONTADOR DE PASOS
+// ==========================================
+
+console.group("NIVEL 5 - CONTADOR DE PASOS");
+
+console.log("Versión lenta:");
+console.log(recurrentesLento(registro));
+
+console.log("Versión rápida:");
+console.log(recurrentesRapido(registro));
+
+console.groupEnd();
+
+
+// ==========================================
+// FIN DE LAS PRUEBAS
+// ==========================================
+
+console.log("FIN DE TODAS LAS PRUEBAS");
 console.log(parQueSuma(registro, 35600))
